@@ -87,7 +87,7 @@ function getRoute(tickets = []) {
 var strStr = function (haystack, needle) {
   // https://stackoverflow.com/questions/59290728/javascript-slice-without-using-built-in-method
   function slice(str, begin = 0, end = str.length) {
-    let result = '';
+    let result = "";
     for (let i = begin; i < end; i++) {
       result += str[i];
     }
@@ -163,33 +163,33 @@ function flatten(obj) {
 }
 
 const graph = {
-  tensorflow: ['nvcc', 'gpu', 'linux'],
-  nvcc: ['linux'],
-  linux: ['core'],
-  mylib: ['tensorflow'],
-  mylib2: ['requests'],
+  tensorflow: ["nvcc", "gpu", "linux"],
+  nvcc: ["linux"],
+  linux: ["core"],
+  mylib: ["tensorflow"],
+  mylib2: ["requests"],
 };
 
 // console.log(flatten(graph));
 
 const rubricatorNodes = [
   {
-    title: 'Вещи',
+    title: "Вещи",
     children: [
       {
-        title: 'Одежда',
+        title: "Одежда",
         children: [
           {
-            title: 'Мужская',
+            title: "Мужская",
             children: [
               {
-                title: 'худи',
+                title: "худи",
                 children: [],
               },
             ],
           },
           {
-            title: 'Женская',
+            title: "Женская",
             children: [],
           },
         ],
@@ -197,25 +197,25 @@ const rubricatorNodes = [
     ],
   },
   {
-    title: 'Хобби',
+    title: "Хобби",
     children: [
       {
-        title: 'Велосипеды',
+        title: "Велосипеды",
         children: [
           {
-            title: 'Горные',
+            title: "Горные",
             children: [],
           },
         ],
       },
       {
-        title: 'Мангалы',
+        title: "Мангалы",
         children: [],
       },
     ],
   },
   {
-    title: 'Транспорт',
+    title: "Транспорт",
     children: [],
   },
 ];
@@ -231,9 +231,9 @@ function getBreadCtumps(data) {
     }
   };
 
-  data.forEach((deepObj) => addSegmant(deepObj, ''));
+  data.forEach((deepObj) => addSegmant(deepObj, ""));
 
-  return store.join('\n');
+  return store.join("\n");
 }
 
 // console.log(getBreadCtumps(rubricatorNodes));
@@ -289,12 +289,12 @@ function prettyPrint2(data) {
  * https://leetcode.com/problems/course-schedule-ii/
  */
 const packDep = {
-  A: ['B', 'C'],
-  B: ['E'],
-  C: ['D', 'E', 'F'],
+  A: ["B", "C"],
+  B: ["E"],
+  C: ["D", "E", "F"],
   D: [],
   F: [],
-  G: ['C'],
+  G: ["C"],
   E: [],
 };
 
@@ -333,7 +333,7 @@ function flattenPackDep(obj) {
  * https://www.youtube.com/watch?v=d74CJIqw268
  */
 var removeOccurrences = function (s, part) {
-  let result = '';
+  let result = "";
 
   for (let i = 0; i < s.length; i++) {
     result += s[i];
@@ -350,12 +350,12 @@ var removeOccurrences = function (s, part) {
  * http://blog.algoprog.ru/inner-loops/
  */
 function removeSpace2(str) {
-  let res = '';
+  let res = "";
   for (let i = 0; i < str.length; i++) {
-    if (str[i] !== ' ') {
+    if (str[i] !== " ") {
       res += str[i];
     } else {
-      if (i === 0 || str[i - 1] !== ' ') {
+      if (i === 0 || str[i - 1] !== " ") {
         res += str[i];
       }
     }
@@ -364,15 +364,15 @@ function removeSpace2(str) {
   return res;
 }
 var removeSpace = (function (str) {
-  let res = '';
+  let res = "";
   let i = 0;
   while (i < str.length) {
-    if (str[i] !== ' ') {
+    if (str[i] !== " ") {
       res += str[i];
       i++;
     } else {
-      res += ' ';
-      while (str[i] === ' ') {
+      res += " ";
+      while (str[i] === " ") {
         i++;
       }
     }
@@ -380,17 +380,17 @@ var removeSpace = (function (str) {
 
   // console.log(removeSpace2(str));
   return res;
-})('   ab    cd  e');
+})("   ab    cd  e");
 
 var check = function (s) {
   let i = 0;
   let j = s.length - 1;
   while (i < j) {
-    if (s[i] === ' ') {
+    if (s[i] === " ") {
       i++;
       continue;
     }
-    if (s[j] === ' ') {
+    if (s[j] === " ") {
       j--;
       continue;
     }
@@ -402,3 +402,91 @@ var check = function (s) {
   return true;
 };
 // console.log(check('а роза упала на лапу азора'));
+
+/**
+ * 14. Longest Common Prefix
+ * https://leetcode.com/problems/longest-common-prefix/
+ */
+var longestCommonPrefix = function (items) {
+  items.sort((a, b) => a.length - b.length);
+  let [word] = items;
+
+  while (word.length && !items.every((i) => i.slice(0, word.length) === word)) {
+    word = word.slice(0, -1);
+  }
+
+  return word.length === 0 ? "" : word;
+};
+
+// console.log(longestCommonPrefix(["баба", "бабочка", "бабушка"]));
+// console.log(longestCommonPrefix(["flower", "flow", "flight"]));
+// console.log(longestCommonPrefix(["dog", "racecar", "car"]));
+// console.log(longestCommonPrefix(["reflower", "flow", "flight"]));
+
+/**
+ * 1047. Remove All Adjacent Duplicates In String
+ * https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/
+ */
+var removeDuplicates = function (s) {
+  let stack = [];
+  for (let i of s) {
+    if (stack.length && stack.at(-1) === i) {
+      stack.pop();
+    } else {
+      stack.push(i);
+    }
+  }
+
+  return stack.join("");
+};
+
+// console.log(removeDuplicates("abbaca"));
+// console.log(removeDuplicates("azxxzy"));
+
+/**
+ * 1209. Remove All Adjacent Duplicates in String II
+ * https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/
+ * https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/discuss/510092/JavaScript-stack
+ */
+var removeDuplicates = function (s, k) {
+  function checkIsEqual(k) {
+    let count = 0;
+    let str = "";
+    for (let i = stack.length - 1; i >= 0; i--) {
+      if (k === count) break;
+      str += stack[i];
+      count++;
+    }
+
+    return str === stack.at(-1).repeat(k);
+  }
+
+  let stack = [];
+  let i = 0;
+
+  while (i < s.length) {
+    stack.push(s[i]);
+
+    if (stack.length >= k && checkIsEqual(k)) {
+      const item = stack.at(-1);
+      for (let i = 0; i < k; i++) {
+        stack.pop();
+      }
+
+      while (i < s.length && s[i] === item) {
+        i += 1;
+      }
+    } else {
+      i += 1;
+    }
+  }
+
+  return stack.join("");
+};
+// console.log(removeDuplicates("abcd", 2));
+// console.log(removeDuplicates("deeedbbcccbdaa", 3));
+console.log(removeDuplicates("pbbcggttciiippooaais", 2));
+/**
+ * pbbcggttciiippooaais
+ * pbbcggttciiippooaais
+ */
