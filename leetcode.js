@@ -87,7 +87,7 @@ function getRoute(tickets = []) {
 var strStr = function (haystack, needle) {
   // https://stackoverflow.com/questions/59290728/javascript-slice-without-using-built-in-method
   function slice(str, begin = 0, end = str.length) {
-    let result = "";
+    let result = '';
     for (let i = begin; i < end; i++) {
       result += str[i];
     }
@@ -163,33 +163,33 @@ function flatten(obj) {
 }
 
 const graph = {
-  tensorflow: ["nvcc", "gpu", "linux"],
-  nvcc: ["linux"],
-  linux: ["core"],
-  mylib: ["tensorflow"],
-  mylib2: ["requests"],
+  tensorflow: ['nvcc', 'gpu', 'linux'],
+  nvcc: ['linux'],
+  linux: ['core'],
+  mylib: ['tensorflow'],
+  mylib2: ['requests'],
 };
 
 // console.log(flatten(graph));
 
 const rubricatorNodes = [
   {
-    title: "Вещи",
+    title: 'Вещи',
     children: [
       {
-        title: "Одежда",
+        title: 'Одежда',
         children: [
           {
-            title: "Мужская",
+            title: 'Мужская',
             children: [
               {
-                title: "худи",
+                title: 'худи',
                 children: [],
               },
             ],
           },
           {
-            title: "Женская",
+            title: 'Женская',
             children: [],
           },
         ],
@@ -197,25 +197,25 @@ const rubricatorNodes = [
     ],
   },
   {
-    title: "Хобби",
+    title: 'Хобби',
     children: [
       {
-        title: "Велосипеды",
+        title: 'Велосипеды',
         children: [
           {
-            title: "Горные",
+            title: 'Горные',
             children: [],
           },
         ],
       },
       {
-        title: "Мангалы",
+        title: 'Мангалы',
         children: [],
       },
     ],
   },
   {
-    title: "Транспорт",
+    title: 'Транспорт',
     children: [],
   },
 ];
@@ -231,9 +231,9 @@ function getBreadCtumps(data) {
     }
   };
 
-  data.forEach((deepObj) => addSegmant(deepObj, ""));
+  data.forEach((deepObj) => addSegmant(deepObj, ''));
 
-  return store.join("\n");
+  return store.join('\n');
 }
 
 // console.log(getBreadCtumps(rubricatorNodes));
@@ -289,12 +289,12 @@ function prettyPrint2(data) {
  * https://leetcode.com/problems/course-schedule-ii/
  */
 const packDep = {
-  A: ["B", "C"],
-  B: ["E"],
-  C: ["D", "E", "F"],
+  A: ['B', 'C'],
+  B: ['E'],
+  C: ['D', 'E', 'F'],
   D: [],
   F: [],
-  G: ["C"],
+  G: ['C'],
   E: [],
 };
 
@@ -333,7 +333,7 @@ function flattenPackDep(obj) {
  * https://www.youtube.com/watch?v=d74CJIqw268
  */
 var removeOccurrences = function (s, part) {
-  let result = "";
+  let result = '';
 
   for (let i = 0; i < s.length; i++) {
     result += s[i];
@@ -350,12 +350,12 @@ var removeOccurrences = function (s, part) {
  * http://blog.algoprog.ru/inner-loops/
  */
 function removeSpace2(str) {
-  let res = "";
+  let res = '';
   for (let i = 0; i < str.length; i++) {
-    if (str[i] !== " ") {
+    if (str[i] !== ' ') {
       res += str[i];
     } else {
-      if (i === 0 || str[i - 1] !== " ") {
+      if (i === 0 || str[i - 1] !== ' ') {
         res += str[i];
       }
     }
@@ -364,15 +364,15 @@ function removeSpace2(str) {
   return res;
 }
 var removeSpace = (function (str) {
-  let res = "";
+  let res = '';
   let i = 0;
   while (i < str.length) {
-    if (str[i] !== " ") {
+    if (str[i] !== ' ') {
       res += str[i];
       i++;
     } else {
-      res += " ";
-      while (str[i] === " ") {
+      res += ' ';
+      while (str[i] === ' ') {
         i++;
       }
     }
@@ -380,17 +380,17 @@ var removeSpace = (function (str) {
 
   // console.log(removeSpace2(str));
   return res;
-})("   ab    cd  e");
+})('   ab    cd  e');
 
 var check = function (s) {
   let i = 0;
   let j = s.length - 1;
   while (i < j) {
-    if (s[i] === " ") {
+    if (s[i] === ' ') {
       i++;
       continue;
     }
-    if (s[j] === " ") {
+    if (s[j] === ' ') {
       j--;
       continue;
     }
@@ -415,7 +415,7 @@ var longestCommonPrefix = function (items) {
     word = word.slice(0, -1);
   }
 
-  return word.length === 0 ? "" : word;
+  return word.length === 0 ? '' : word;
 };
 
 // console.log(longestCommonPrefix(["баба", "бабочка", "бабушка"]));
@@ -437,7 +437,7 @@ var removeDuplicates = function (s) {
     }
   }
 
-  return stack.join("");
+  return stack.join('');
 };
 
 // console.log(removeDuplicates("abbaca"));
@@ -451,7 +451,7 @@ var removeDuplicates = function (s) {
 var removeDuplicates = function (s, k) {
   function checkIsEqual(k) {
     let count = 0;
-    let str = "";
+    let str = '';
     for (let i = stack.length - 1; i >= 0; i--) {
       if (k === count) break;
       str += stack[i];
@@ -472,8 +472,10 @@ var removeDuplicates = function (s, k) {
       for (let i = 0; i < k; i++) {
         stack.pop();
       }
-
-      while (i < s.length && s[i] === item) {
+      // count - пропускаем кол-во элемнтов равное K
+      let count = 1;
+      while (i < s.length && s[i] === item && count !== k) {
+        count++;
         i += 1;
       }
     } else {
@@ -481,17 +483,83 @@ var removeDuplicates = function (s, k) {
     }
   }
 
-  return stack.join("");
+  return stack.join('');
 };
 // console.log(removeDuplicates("abcd", 2));
 // console.log(removeDuplicates("deeedbbcccbdaa", 3));
-console.log(removeDuplicates("pbbcggttciiippooaais", 2));
+console.log(removeDuplicates('pbbcggttciiippooaais', 2));
 /**
- * pbbcggttciiippooaais
- * pbbcggttciiippooaais
+ * izzlz
+ * pippooaais
  */
 
 /**
- * TODO
+ *
  * https://leetcode.com/problems/remove-all-occurrences-of-a-substring/
  */
+var removeOccurrences = function (s, part) {
+  function trim(idx) {
+    return str.slice(0, idx) + str.slice(idx + part.length);
+  }
+
+  let str = s;
+  let idx = str.indexOf(part);
+  while (idx !== -1) {
+    str = trim(idx);
+    idx = str.indexOf(part);
+  }
+
+  return str;
+};
+
+var removeOccurrences2 = function (s, part) {
+  let str = s;
+  while (str.includes(part)) {
+    str = str.replace(part, '');
+  }
+  return str;
+};
+// console.log(removeOccurrences('daabcbaabcbc', 'abc'));
+// console.log(removeOccurrences('axxxxyyyyb', 'xy'));
+// console.log(removeOccurrences('daabcbaabcbc', 'abc'));
+// console.log(removeOccurrences('axxxxyyyyb', 'xy'));
+
+/**
+ * 283. Move Zeroes
+ * https://leetcode.com/problems/move-zeroes/
+ * [0,1,0,3,12]
+ * [1,0,0,3,12] i = 1, nonzero = 1
+ * [1,3,0,0,12] i = 3, nonzero = 2
+ * [1,3,0,0,12] i = 4, nonzero = 3
+ */
+var moveZeroes = function (nums) {
+  for (let i = 0, nonZero = 0; i < nums.length; i++) {
+    if (nums[i] !== 0) {
+      [nums[i], nums[nonZero]] = [nums[nonZero], nums[i]];
+      nonZero++;
+    }
+  }
+
+  return nums;
+};
+
+// console.log(moveZeroes([0, 1, 0, 3, 12]));
+
+/**
+ * 1047. Remove All Adjacent Duplicates In String
+ * https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/
+ */
+var removeDuplicates = function (s) {
+  let stack = [];
+
+  for (let c of s) {
+    if (stack.length && stack.at(-1) === c) {
+      stack.pop();
+    } else {
+      stack.push(c);
+    }
+  }
+
+  return stack.join('');
+};
+// console.log(removeDuplicates('abbaca'));

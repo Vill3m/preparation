@@ -52,7 +52,9 @@ function isValid(str) {
 // console.log(isValid('()'));
 // console.log(isValid('()[]{}'));
 // console.log(isValid('(]'));
-
+/**
+ * lesson18
+ */
 function remove3Num(str) {
   const stack = [];
   let i = 0;
@@ -69,6 +71,7 @@ function remove3Num(str) {
       stack.pop();
       stack.pop();
       /**
+       * а теперь нам нужно не рассматривать те элементы которые равны color
        * тут мы короче скипаем итерацию длс 59 строки те если будет 1111 - 3удалили и 1 скипнули i++
        */
       while (i < str.length && str[i] === color) {
