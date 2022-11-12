@@ -473,9 +473,9 @@ var removeDuplicates = function (s, k) {
         stack.pop();
       }
       // count - пропускаем кол-во элемнтов равное K
-      let count = 1;
-      while (i < s.length && s[i] === item && count !== k) {
-        count++;
+      let count = k;
+      while (i < s.length && s[i] === item && count !== 0) {
+        count--;
         i += 1;
       }
     } else {
@@ -485,12 +485,38 @@ var removeDuplicates = function (s, k) {
 
   return stack.join('');
 };
+var removeDuplicates = function (s, k) {
+  let result = '';
+  const stack = [];
+
+  for (let char of s) {
+    if (stack.length && stack.at(-1)[0] === char) {
+      stack.at(-1)[1] += 1;
+      if (stack.at(-1)[1] === k) {
+        stack.pop();
+      }
+    } else {
+      stack.push([char, 1]);
+    }
+  }
+
+  for (let [char, count] of stack) {
+    result += char.repeat(count);
+  }
+
+  return result;
+};
+// var removeDuplicates = function (s, k) {};
 // console.log(removeDuplicates("abcd", 2));
 // console.log(removeDuplicates("deeedbbcccbdaa", 3));
-console.log(removeDuplicates('pbbcggttciiippooaais', 2));
+// console.log(removeDuplicates('pbbcggttciiippooaais', 2));
+// console.log(
+//   removeDuplicates('iiiixxxxxiiccccczzffffflllllllllfffffllyyyyyuuuuuz', 5)
+// );
 /**
+ * zzlllz - no
+ * izzlz - yes
  * izzlz
- * pippooaais
  */
 
 /**
