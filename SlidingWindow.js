@@ -92,10 +92,11 @@ var longestSubstringWithKDistinct = function (str, k) {
 
   for (let i = 0; i < str.length; i++) {
     const char = str[i];
-    if (!(char in h)) {
-      h[char] = 0;
+    if (char in h) {
+      h[char]++;
+    } else {
+      h[char] = 1;
     }
-    h[char]++;
 
     while (Object.keys(h).length > k) {
       const char = str[start];
