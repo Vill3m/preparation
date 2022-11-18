@@ -589,3 +589,20 @@ var removeDuplicates = function (s) {
   return stack.join('');
 };
 // console.log(removeDuplicates('abbaca'));
+
+/**
+ * 53. Maximum Subarray
+ * https://leetcode.com/problems/maximum-subarray/
+ * https://www.youtube.com/watch?v=XGMzPg4FCT4
+ */
+var maxSubArray = function (nums) {
+  let max = nums[0];
+  let curr = 0;
+  for (let n of nums) {
+    curr = Math.max(curr + n, n);
+    max = Math.max(max, curr);
+  }
+
+  return max;
+};
+console.log(maxSubArray([5, 4, -1, 7, 8]));

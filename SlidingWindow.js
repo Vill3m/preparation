@@ -1,3 +1,12 @@
+/**
+ * чтобы узнать разницу между 2 элеменатми в массивае
+ * [0, 1, 2, 3, 4, 5, 6, 7]
+ * end = 1
+ * start = 5
+ * diff = 5 - 1 + 1 = 5
+ * end - start + 1
+ */
+
 var findAveragesOfSubarrays = function (arr = [], k) {
   const result = [];
   for (let i = 0; i < arr.length - k + 1; i++) {
@@ -25,7 +34,7 @@ var findAveragesOfSubarrays = function (arr = [], k) {
   return result;
 };
 
-console.log(findAveragesOfSubarrays([1, 3, 2, 6, -1, 4, 1, 8, 2], 5));
+// console.log(findAveragesOfSubarrays([1, 3, 2, 6, -1, 4, 1, 8, 2], 5));
 
 const maxSubArrayOfSizeK = function (arr, k) {
   let max = 0;
@@ -110,6 +119,101 @@ var longestSubstringWithKDistinct = function (str, k) {
 
   return maxLen;
 };
-console.log(`${longestSubstringWithKDistinct('araaci', 2)}`);
-console.log(`${longestSubstringWithKDistinct('araaci', 1)}`);
-console.log(`${longestSubstringWithKDistinct('cbbebi', 3)}`);
+var longestSubstringWithKDistinct = function (s, k) {
+  let start = 0;
+  let end = 0;
+  let maxLen = 0;
+  let d = {};
+
+  while (end < s.length) {
+    d[s[end]] = end;
+    if (Object.keys(d).length > k) {
+      let min = Math.min(...Object.values(d));
+      start = min + 1;
+      delete d[s[min]];
+    }
+    maxLen = Math.max(maxLen, end - start + 1);
+    end++;
+  }
+
+  return maxLen;
+};
+// console.log(`${longestSubstringWithKDistinct('araaci', 2)}`);
+// console.log(`${longestSubstringWithKDistinct('araaci', 1)}`);
+// console.log(`${longestSubstringWithKDistinct('cbbebi', 3)}`);
+
+/**
+ * https://leetcode.com/problems/fruit-into-baskets/solution/
+ */
+var fruitsIntoBaskets = function (fruits) {
+  let windowStart = 0,
+    maxLength = 0,
+    h = {};
+  for (let i = 0; i < fruits.length; i++) {
+    const fruit = fruits[i];
+    if (fruit in h) {
+      h[fruit] += 1;
+    } else {
+      h[fruit] = 1;
+    }
+    while (Object.keys(h).length > 2) {
+      const fruit = fruits[windowStart];
+      h[fruit] -= 1;
+      if (h[fruit] === 0) {
+        delete h[fruit];
+      }
+      windowStart += 1;
+    }
+    maxLength = Math.max(maxLength, i - windowStart + 1);
+  }
+  return maxLength;
+};
+var fruitsIntoBaskets = function (fruits) {
+  let start = 0;
+  let end = 0;
+  let maxLen = 0;
+  let d = {};
+
+  while (end < fruits.length) {
+    d[fruits[end]] = end;
+    if (Object.keys(d).length > 2) {
+      let min = Math.min(...Object.values(d));
+      start = min + 1;
+      delete d[fruits[min]];
+    }
+    maxLen = Math.max(maxLen, end - start + 1);
+    end++;
+  }
+
+  return maxLen;
+};
+
+// console.log(`${fruitsIntoBaskets(['A', 'B', 'C', 'A', 'C'])}`);
+// console.log(`${fruitsIntoBaskets(['A', 'B', 'C', 'B', 'B', 'C'])}`);
+
+/**
+ * Longest Substring with At Most Two Distinct Characters - LeetCode 159
+ * https://www.youtube.com/watch?v=odSP7QrlJys
+ */
+
+var lengthOfLongestSubstringTwoDistinct = function (s) {
+  let start = 0;
+  let end = 0;
+  let maxLen = 0;
+  let d = {};
+
+  while (end < s.length) {
+    d[s[end]] = end;
+    if (Object.keys(d).length > 2) {
+      let min = Math.min(...Object.values(d));
+      start = min + 1;
+      delete d[s[min]];
+    }
+    maxLen = Math.max(maxLen, end - start + 1);
+    end++;
+  }
+
+  return maxLen;
+};
+// console.log(lengthOfLongestSubstringTwoDistinct('eceba'));
+// console.log(lengthOfLongestSubstringTwoDistinct('ccaabbb'));
