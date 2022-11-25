@@ -605,4 +605,153 @@ var maxSubArray = function (nums) {
 
   return max;
 };
-console.log(maxSubArray([5, 4, -1, 7, 8]));
+// console.log(maxSubArray([5, 4, -1, 7, 8]));
+
+/**
+ * 200. Number of Islands
+ * https://www.youtube.com/watch?v=cbR3HeEpBrU
+ */
+var numIslands = function (grid) {
+  if (!grid?.length) return;
+  let islands = 0;
+
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[i].length; j++) {
+      if (grid[i][j] === '1') {
+        islands++;
+        dfs(grid, i, j);
+      }
+    }
+  }
+
+  function dfs(grid, i, j) {
+    if (
+      i < 0 ||
+      j < 0 ||
+      i >= grid.length ||
+      j >= grid[i].length ||
+      grid[i][j] === '0'
+    ) {
+      return;
+    }
+
+    grid[i][j] = '0';
+
+    dfs(grid, i - 1, j);
+    dfs(grid, i, j - 1);
+    dfs(grid, i + 1, j);
+    dfs(grid, i, j + 1);
+  }
+
+  return islands;
+};
+// console.log(
+//   numIslands([
+//     ['1', '1', '1', '1', '0'],
+//     ['1', '1', '0', '1', '0'],
+//     ['1', '1', '0', '0', '0'],
+//     ['0', '0', '0', '0', '0'],
+//   ])
+// );
+
+/**
+ * 252. Meeting Rooms
+ * https://leetcode.com/problems/meeting-rooms/
+ * https://www.youtube.com/watch?v=XI9L0HDl-No
+ */
+var canAttendMeetings = function (intervals) {
+  intervals.sort((a, b) => a[0] - b[0]);
+  let [[start, end]] = intervals;
+
+  for (let i = 1; i < intervals.length; i++) {
+    let [localStart, localEnd] = intervals[i];
+
+    if (localStart <= end) {
+      return false;
+    } else {
+      end = localEnd;
+    }
+  }
+
+  return true;
+};
+// console.log(
+//   minMeetingRooms([
+//     [0, 30],
+//     [5, 10],
+//     [15, 20],
+//   ])
+// );
+// console.log(
+//   minMeetingRooms([
+//     [7, 10],
+//     [2, 4],
+//   ])
+// );
+
+/**
+ * 253. Meeting Rooms 2
+ * Meeting Rooms II
+ * https://osgoodgunawan.medium.com/meeting-room-ii-in-javascript-d478690dd432
+ * https://github.com/anatoliy8493/leetcode/blob/main/meeting-rooms-ii/meeting-rooms-ii.js
+ */
+function minMeetingRooms(intervals) {
+  let start = intervals.sort((a, b) => a[0] - b[0]);
+  let end = [...intervals].sort((a, b) => a[1] - b[1]);
+  let meetingRooms = 0;
+  let j = 0;
+
+  for (let i = 0; i < intervals.length; i++) {
+    if (start[i][0] < end[j][1]) {
+      meetingRooms++;
+    } else {
+      j++;
+    }
+  }
+
+  return meetingRooms;
+}
+
+/**
+ * 435. Non-overlapping Intervals
+ * https://leetcode.com/problems/non-overlapping-intervals/
+ */
+var eraseOverlapIntervals = function (intervals) {
+  let result = [...intervals];
+  let desc = [...intervals].sort((a, b) => a[0] - b[0]);
+  let [[start, end]] = desc;
+
+  for (let i = 1; i < intervals.length; i++) {
+    let [localStart, localEnd] = desc[i];
+    if (localStart <= end) {
+      end = localEnd;
+      result = result.filter(([a, b]) => a === start && b === end);
+    } else {
+      start = localStart;
+      end = localEnd;
+    }
+  }
+
+  return intervals.length - result.length + 1;
+};
+// console.log(
+//   eraseOverlapIntervals([
+//     [1, 2],
+//     [2, 3],
+//     [3, 4],
+//     [1, 3],
+//   ])
+// );
+// console.log(
+//   eraseOverlapIntervals([
+//     [1, 2],
+//     [1, 2],
+//     [1, 2],
+//   ])
+// );
+// console.log(
+//   eraseOverlapIntervals([
+//     [1, 2],
+//     [2, 3],
+//   ])
+// );
