@@ -8,7 +8,7 @@ var factorial = function (n, total = 1) {
   return factorial(n - 1, n * total);
 };
 
-console.log(factorial(5));
+// console.log(factorial(5));
 
 const createCounter = (tag) => (count) => ({
   inc() {
@@ -24,10 +24,10 @@ const createCounter = (tag) => (count) => ({
 
 const promoCounter = createCounter('promo');
 const work = promoCounter(0);
-work.inc();
-work.inc();
-work.inc();
-work.val();
+// work.inc();
+// work.inc();
+// work.inc();
+// work.val();
 
 const memo =
   (fn, cache = new Map()) =>
@@ -38,8 +38,8 @@ const memo =
     return cache.get(param);
   };
 const f = memo((x) => x * Math.sin(1 / x));
-f(0.314);
-f(0.314);
+// f(0.314);
+// f(0.314);
 
 const words = (str) => str.toLowerCase().match(/[а-яё]+/g);
 
@@ -63,3 +63,7 @@ function curry(fn) {
 function impure(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+/**
+ * функция предикат - это ф-ция которая возвращает true or false
+ */
