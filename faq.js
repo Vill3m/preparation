@@ -69,11 +69,8 @@ const debounce = (fn, ms) => {
 
 //   return function () {
 //     if (isCooldown) return;
-
 //     f.apply(this, arguments);
-
 //     isCooldown = true;
-
 //     setTimeout(() => (isCooldown = false), ms);
 //   };
 // }
@@ -137,7 +134,7 @@ function flattenR(root) {
   return result;
 }
 
-console.log(flattenR(tree));
+// console.log(flattenR(tree));
 
 function p1(a) {
   return new Promise((resolve, reject) => {
@@ -171,4 +168,93 @@ function runPromiseInSequence(arr = [], input) {
 }
 
 const promiseArr = [p1, p2, f3, p4];
-runPromiseInSequence(promiseArr, 10).then(console.log); // 1200
+// runPromiseInSequence(promiseArr, 10).then(console.log); // 1200
+
+function curry(fn) {
+  return function curried(...args) {
+    if (args.length >= fn.length) {
+      return fn.apply(this, args);
+    } else {
+      return curried.bind(this, ...args);
+    }
+  };
+}
+
+// function curry(fn) {
+//   return function curried(...args) {
+//     if (args.length >= fn.length) {
+//       return fn.apply(this, args);
+//     } else {
+//       return function (...args2) {
+//         return curried.apply(this, args.concat(args2));
+//       };
+//     }
+//   };
+// }
+
+// function curry(fn) {
+//   const length = fn.length;
+//   return function currify() {
+//     const context = this;
+//     const args = Array.prototype.slice.call(arguments);
+//     if (args.length >= length) {
+//       return fn.call(context, ...args);
+//     } else {
+//       return currify.bind(context, ...args);
+//     }
+//   };
+// }
+
+function sum(a, b, c) {
+  return a + b + c;
+}
+
+let curriedSum = curry(sum);
+
+// console.log(curriedSum(1, 2, 3)); // 6, still callable normally
+// console.log(curriedSum(1)(2, 3)); // 6, currying of 1st arg
+// console.log(curriedSum(1)(2)(3)); // 6, full currying
+var now1 = performance.now();
+const start = function () {
+  let now2 = performance.now();
+
+  requestAnimationFrame((after) =>
+    console.log({
+      after,
+      now1,
+      now2,
+      now3,
+    })
+  );
+};
+var now3 = performance.now();
+// start();
+
+function Archiver() {
+  let temperature = null;
+  const archive = [];
+
+  Object.defineProperty(this, 'temperature', {
+    get() {
+      console.log('get');
+      return temperature;
+    },
+    set(value) {
+      temperature = value;
+      archive.push({
+        val: temperature,
+      });
+    },
+  });
+
+  this.getArchive = () => {
+    console.log(archive);
+    return archive;
+  };
+}
+
+const arc = new Archiver();
+arc.temperature; // 'get!'
+arc.temperature = 11;
+arc.temperature = 13;
+arc.getArchive(); // [{ val: 11 }, { val: 13 }]
