@@ -253,8 +253,117 @@ function Archiver() {
   };
 }
 
-const arc = new Archiver();
-arc.temperature; // 'get!'
-arc.temperature = 11;
-arc.temperature = 13;
-arc.getArchive(); // [{ val: 11 }, { val: 13 }]
+// const arc = new Archiver();
+// arc.temperature; // 'get!'
+// arc.temperature = 11;
+// arc.temperature = 13;
+// arc.getArchive(); // [{ val: 11 }, { val: 13 }]
+
+/**
+ * undeclared
+ * Uncaught ReferenceError: x is not defined
+ * Необъявленные переменные создаются, когда вы присваиваете значение идентификатору, который ранее не был создан с помощью var, let или const.
+ * В строгом режиме при попытке присвоения необъявленной переменной будет выдана ошибка ReferenceError или 1 в примере ниже.
+ */
+// function foo() {
+//   x = 1;
+// }
+// foo();
+// console.log(x);
+
+/**
+ * Explain "hoisting".
+ * Однако поднимается только декларация, значение (если оно есть) остается на месте.
+ * console.log(foo); // undefined
+ * var foo = 1;
+ * console.log(foo); // 1
+ */
+
+/**
+ * implement bind
+ */
+Function.prototype.bind = function (ctx) {
+  const fn = this;
+  return (...args) => fn.apply(ctx, args);
+};
+function test(b, c) {
+  console.log({
+    a: this.a,
+    b,
+    c,
+  });
+}
+
+var fn = test.bind({ a: 'Hello ' });
+// fn(1, 2);
+
+/**
+ * implement promisify
+ * function(result) {}
+ * const exampleFn = function(x,y, callback) {}
+ * const promisified = promisify(exampleFn);
+ * promisified.then().then()...
+ */
+function promisify(fn) {
+  return (...args) => {
+    return new Promise((resolve) => {
+      function cb(result) {
+        resolve(result);
+      }
+      fn.apply(this, args.concat(cb));
+    });
+  };
+}
+
+var exampleFn = function (a, b, cb) {
+  cb(a, b);
+};
+var promisified = promisify(exampleFn);
+// promisified(5, 15).then(console.log);
+
+function Foo() {}
+class Bar extends Array {}
+console.log({
+  Bar,
+  Foo,
+  prototype: Foo.prototype,
+  proto: Foo.__proto__,
+});
+
+/**
+ * Event Delegation
+ */
+document.getElementById('event-delegation').addEventListener('click', (e) => {
+  if (e.target?.nodeName === 'LI') {
+    console.log(e.target.id.replace('post-', ''));
+    if (e.target.matches('#post-1')) {
+      console.log('find one');
+    }
+  }
+});
+
+var duplicate = function (arr = []) {
+  return [...arr, ...arr];
+};
+
+var fizzbuzz = function () {
+  // for (let i = 1; i <= 100; i++) {
+  //   let f = i % 3 == 0,
+  //     b = i % 5 == 0;
+  //   console.log(f ? (b ? 'FizzBuzz' : 'Fizz') : b ? 'Buzz' : i);
+  // }
+
+  for (let i = 0; i <= 100; i++) {
+    if (i % 3 === 0 && i % 5 === 0) {
+      console.log('fizzbuzz');
+    } else if (i % 5 === 0) {
+      console.log('buzz');
+    } else if (i % 3 === 0) {
+      console.log('fizz');
+    } else {
+      console.log(i);
+    }
+  }
+};
+
+fizzbuzz();
