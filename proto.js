@@ -80,7 +80,17 @@ Rabbit.prototype = animal;
 let rabbit = new Rabbit('White Rabbit'); //  rabbit.__proto__ == animal
 
 console.log(rabbit.eats); // true
-
+/**
+ * Когда мы создаём свойство с помощью дескриптора, все флаги по умолчанию имеют значение false.
+ * Таким образом, в коде выше dictionary.toString – неперечисляемое свойство.
+ */
+let dictionary = Object.create(null, {
+  toString: {
+    value() {
+      return Object.keys(this).join();
+    },
+  },
+});
 let clone = Object.create(
   Object.getPrototypeOf(obj),
   Object.getOwnPropertyDescriptors(obj)
