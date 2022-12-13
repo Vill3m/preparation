@@ -6,7 +6,7 @@
 var animal = {
   eats: true,
   walk() {
-    console.log("animal walk");
+    console.log('animal walk');
   },
 };
 
@@ -16,7 +16,7 @@ let rabbit = {
 };
 // Теперь вызов rabbit.walk() находит метод непосредственно в объекте и выполняет его, не используя прототип:
 rabbit.walk = function () {
-  console.log("Rabbit! Bounce-bounce!");
+  console.log('Rabbit! Bounce-bounce!');
 };
 rabbit.walk();
 
@@ -32,10 +32,10 @@ longEar.walk();
  * Неважно, где находится метод: в объекте или его прототипе. При вызове метода this — всегда объект перед точкой.
  */
 let user = {
-  name: "John",
-  surname: "Smith",
+  name: 'John',
+  surname: 'Smith',
   set fullName(value) {
-    [this.name, this.surname] = value.split(" ");
+    [this.name, this.surname] = value.split(' ');
   },
   get fullName() {
     return `${this.name} ${this.surname}`;
@@ -51,7 +51,7 @@ let admin = {
 //   admin,
 //   user,
 // });
-admin.fullName = "Alice Cooper";
+admin.fullName = 'Alice Cooper';
 
 // console.log({
 //   admin,
@@ -64,6 +64,8 @@ admin.fullName = "Alice Cooper";
  * F.prototype используется только в момент вызова new F()
  * По умолчанию "prototype" – объект с единственным свойством constructor, которое ссылается на функцию-конструктор.
  * По умолчанию все функции имеют F.prototype = { constructor: F }
+ * Как было сказано в начале этой секции учебника,
+ * __proto__ – это способ доступа к свойству [[Prototype]], это не само свойство [[Prototype]].
  */
 var animal = {
   eats: true,
@@ -75,6 +77,11 @@ function Rabbit(name) {
 
 Rabbit.prototype = animal;
 
-let rabbit = new Rabbit("White Rabbit"); //  rabbit.__proto__ == animal
+let rabbit = new Rabbit('White Rabbit'); //  rabbit.__proto__ == animal
 
 console.log(rabbit.eats); // true
+
+let clone = Object.create(
+  Object.getPrototypeOf(obj),
+  Object.getOwnPropertyDescriptors(obj)
+);
