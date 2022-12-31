@@ -10,7 +10,7 @@ var animal = {
   },
 };
 
-let rabbit = {
+var rabbit = {
   jups: true,
   __proto__: animal,
 };
@@ -18,14 +18,16 @@ let rabbit = {
 rabbit.walk = function () {
   console.log('Rabbit! Bounce-bounce!');
 };
-rabbit.walk();
+// rabbit.walk();
 
 let longEar = {
   earLength: 10,
   __proto__: animal,
 };
-
-longEar.walk();
+console.log(Object.keys(longEar));
+console.log(Object.getOwnPropertyDescriptors(longEar));
+console.log(Object.keys(Object.getPrototypeOf(longEar)));
+// longEar.walk();
 
 /**
  * В результате методы являются общими, а состояние объекта — нет.
@@ -77,9 +79,9 @@ function Rabbit(name) {
 
 Rabbit.prototype = animal;
 
-let rabbit = new Rabbit('White Rabbit'); //  rabbit.__proto__ == animal
+var rabbit = new Rabbit('White Rabbit'); //  rabbit.__proto__ == animal
 
-console.log(rabbit.eats); // true
+// console.log(rabbit.eats); // true
 /**
  * Когда мы создаём свойство с помощью дескриптора, все флаги по умолчанию имеют значение false.
  * Таким образом, в коде выше dictionary.toString – неперечисляемое свойство.
@@ -92,6 +94,6 @@ let dictionary = Object.create(null, {
   },
 });
 let clone = Object.create(
-  Object.getPrototypeOf(obj),
-  Object.getOwnPropertyDescriptors(obj)
+  Object.getPrototypeOf(rabbit),
+  Object.getOwnPropertyDescriptors(rabbit)
 );
